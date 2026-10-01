@@ -21,15 +21,18 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Generate Wrapper Files
+      - name: Generate Wrapper
         run: gradle wrapper --gradle-version 8.2.2
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+          mkdir -p apk_dist
+          find . -name "*.apk" -exec cp {} apk_dist/ \;
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: BatteryLogger-APK
-          path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: warn
+          path: apk_dist/
