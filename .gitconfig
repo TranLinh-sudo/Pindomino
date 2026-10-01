@@ -1,0 +1,5 @@
+[credential]
+	helper = store
+[user]
+	email = tranlinh@example.com
+	name = TranLinh-sudo
